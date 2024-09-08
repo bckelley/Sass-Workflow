@@ -26,7 +26,7 @@ gulp.task('sass', async function () {
 // Start a local server with BrowserSync & watch files for changes
 gulp.task('serve', function () {
   browserSyncInstance.init({
-    server: './'  // Serve from the root directory (or specify a different folder)
+    server: './src'  // Serve from the root directory (or specify a different folder)
   });
 
   gulp.watch('src/scss/**/*.scss', gulp.series('sass'));  // Watch for Sass changes
