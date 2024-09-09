@@ -1,15 +1,45 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-  <title>Sass Starter Pack</title>
+  <title>Sass Workflow</title>
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/style.css">
+  <!--<link rel="stylesheet" href="../dist/css/style.css">//-->
+
 </head>
 
 <body>
-  <h1>Sass Workflow</h1>
-  <p>Edit the scss/style.scss file and it will automatically compile into css/style.css</p>
+    <h1>Sass Workflow</h1>
+    <p>Edit the scss/style.scss file and it will automatically compile into css/style.css</p>
+
+    <ul id="fileList"></ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/files')
+            .then(res => res.json())
+            .then(data => {
+            /*  console.log(data)  */
+                const fileList = document.getElementById('fileList')
+                if ( Array.isArray(data.files) ) {
+                    data.files.forEach(file => {
+                        const li = document.createElement('li')
+                        const a = document.createElement('a')
+                        a.href = `/src/edits/${file}`
+                        a.textContent = file
+                        li.appendChild(a)
+                        fileList.appendChild(li)
+                    });
+                } else {
+                    console.error("Expected 'files' to be an array, but got:", data.files);
+                }
+            })
+            .catch(err => {
+                console.error("[ ERR ]: Error fetching file list: ", err)
+            })
+        })
+    </script>
+
 </body>
 
 </html>
